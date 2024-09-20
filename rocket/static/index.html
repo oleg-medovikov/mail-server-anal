@@ -3,11 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Rust Website</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Read Files</title>
+    <style>
+        /* Custom CSS styles if needed */
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Rust Website!</h1>
-    <p>This is a simple website written in Rust with HTML and CSS.</p>
+    <button id="read-files-button">Прочитать файлы</button>
+
+    <script>
+        function readFileButton() {
+            fetch('api/read_files')
+                .then(response => response.json()) // Parse response as JSON
+                .then(data => {
+                    const message = data.message;
+                    alert(`Сообщение от сервера: ${message}`); // Display message in pop-up window
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.getElementById('read-files-button').addEventListener('click', readFileButton);
+    </script>
 </body>
 </html>
+

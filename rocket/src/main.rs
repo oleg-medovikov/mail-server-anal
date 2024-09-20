@@ -1,25 +1,14 @@
+use std::env;
+use sqlx::PgPool;
+
+
 use rocket::fs::{FileServer, relative};
-//use rocket::serde::Serialize;
-use serde::Serialize;
-use rocket::{get, http::Status, serde::json::Json};
+use rocket::routes;
 
-#[macro_use] extern crate rocket;
+mod api;
+use api::read_files::read_files;
 
-// Define a struct for the response data
-#[derive(Serialize)]
-struct HelloResponse {
-    message: String,
-}
-
-// Create a handler function that returns a JSON response
-#[get("/hello")]
-fn hello() -> Result<Json<HelloResponse>, Status> {
-    let response = HelloResponse {
-        message: String::from("Hello, Rocket!"),
-    };
-
-    Ok(Json(response))
-}
+use dotenv::dotenv;
 
 
 mod manual {
@@ -38,9 +27,13 @@ mod manual {
 }
 
 #[rocket::launch]
-fn rocket() -> _ {
+async fn rocket() -> _ {
+    dotenv().ok();
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let pool = PgPool::connect(&database_url).await.expect("No DB CONNECT!");
+
     rocket::build()
         .mount("/", routes![manual::second])
         .mount("/", FileServer::from(relative!("static")))
-        .mount("/api",  routes![hello,])
+        .mount("/api",  routes![read_files,]).manage(pool)
 }
