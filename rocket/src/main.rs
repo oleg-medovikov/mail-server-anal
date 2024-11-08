@@ -1,16 +1,18 @@
 use std::env;
 use sqlx::PgPool;
-
+use dotenv::dotenv;
 
 use rocket::fs::{FileServer, relative};
 use rocket::routes;
+
+mod base;
+use base::create_tables::create_tables;
 
 mod models;
 
 mod api;
 use api::read_files::read_files;
 
-use dotenv::dotenv;
 
 
 mod manual {
@@ -33,6 +35,8 @@ async fn rocket() -> _ {
     dotenv().ok();
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let pool = PgPool::connect(&database_url).await.expect("No DB CONNECT!");
+
+    let _ =  create_tables(&pool).await.expect("Не удалось создать таблицы");
 
     rocket::build()
         .mount("/", routes![manual::second])

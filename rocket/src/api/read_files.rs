@@ -1,20 +1,25 @@
 use serde::Serialize;
 use rocket::{get, http::Status, serde::json::Json};
 use sqlx::PgPool;
-use chrono::{Datelike, Utc};
+use chrono::{Datelike, Utc, NaiveDateTime};
 use regex::Regex;
 
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
 use crate::models::MessageInfo;
+use crate::base::save_message::save_message;
+
 
 fn parse_line(line: &str) -> Option<MessageInfo> {
     // Находим дату
     let date_end = line.find(" mail")?;
     let now = Utc::now();
     let year = now.year();
-    let date = year.to_string() + " " + &line[..date_end];
+    let date_str = year.to_string() + " " + &line[..date_end];
+    // Создаем NaiveDateTime из строки
+    let date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S")
+        .expect("не удалось распарсить дату");
 
     // Находим отправителя
     let sender_start = line.find('<')? + 1;
@@ -44,19 +49,30 @@ fn parse_line(line: &str) -> Option<MessageInfo> {
     // находим size 
     let re = Regex::new(r"size: (\d+),").unwrap();
     // Ищем первое совпадение в строке с использованием match
-    let size = match re.captures(&line) {
-        Some(cap) => cap[1].to_string(),
-        None => "не найден".to_string(),
+        let size = match re.captures(&line) {
+        Some(cap) => {
+            // Преобразуем строку в число i32
+            match cap[1].parse::<i32>() {
+                Ok(size) => size,
+                Err(_) => -1, // Если преобразование не удалось, возвращаем -1
+            }
+        },
+        None => -1, // Если совпадение не найдено, возвращаем -1
     };
-   
+    // находим passed
+    let mut passed: bool = false;
+    if line.contains("CLEAN") {
+        passed = true;
+    }
 
     Some(MessageInfo {
-        date: date.to_string(),
+        date,
         sender: sender.to_string(),
         recipient: recipient.to_string(),
         ip_address: ip_address.to_string(),
         message_id: message_id.to_string(),
-        size: size.to_string(),
+        size,
+        passed
     })
 }
 
@@ -86,7 +102,8 @@ pub async fn read_files(pool: &rocket::State<PgPool>) -> Result<Json<HelloRespon
                 response = HelloResponse {
                     message: format!("Файлы прочитаны {} \n\n {}", &parsed_info, &line),
                 };
-                println!("Файлы прочитаны {} \n\n {}", parsed_info, line);
+                println!("Файлы прочитаны {} \n\n {}", &parsed_info, line);
+                let _ = save_message(&pool, parsed_info).await;
                 break
             }
         }
