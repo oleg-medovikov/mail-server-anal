@@ -1,6 +1,8 @@
 use serde::Serialize;
 use rocket::{get, http::Status, serde::json::Json};
 use sqlx::PgPool;
+use chrono::{Datelike, Utc};
+use regex::Regex;
 
 use std::fmt;
 use std::fs::File;
@@ -12,19 +14,30 @@ struct MessageInfo {
     recipient: String,
     ip_address: String,
     message_id: String,
+    size: String,
 }
 // Реализуем трейт Display для структуры
 impl fmt::Display for MessageInfo {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{{ date: {}, sender: {}, recipient: {}, ip_address: {}, message_id: {} }}", self.date, self.sender, self.recipient, self.ip_address, self.message_id)
-    }
+        write!(
+        f,
+        "{{ date: {}, sender: {}, recipient: {}, ip_address: {}, message_id: {}, size: {} }}",
+        self.date,
+        self.sender,
+        self.recipient,
+        self.ip_address,
+        self.message_id,
+        self.size,
+    )}
 }
 
 
 fn parse_line(line: &str) -> Option<MessageInfo> {
     // Находим дату
-    let date_end = line.find(' ')?;
-    let date = &line[..date_end];
+    let date_end = line.find(" mail")?;
+    let now = Utc::now();
+    let year = now.year();
+    let date = year.to_string() + " " + &line[..date_end];
 
     // Находим отправителя
     let sender_start = line.find('<')? + 1;
@@ -36,15 +49,29 @@ fn parse_line(line: &str) -> Option<MessageInfo> {
     let recipient_end = line[recipient_start..].find('>')? + recipient_start;
     let recipient = &line[recipient_start..recipient_end];
 
-    // Находим IP-адрес
-    let ip_start = line.find('[')? + 1;
-    let ip_end = line.find(']')?;
-    let ip_address = &line[ip_start..ip_end];
+    // Создаем регулярное выражение для поиска IP-адреса
+    let re = Regex::new(r"\[(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\]").unwrap();
+    // Ищем первое совпадение в строке с использованием match
+    let ip_address = match re.captures(&line) {
+        Some(cap) => cap[1].to_string(),
+        None => "не найден".to_string(),
+    };
 
     // Находим Message-ID
-    let message_id_start = line.find("Message-ID: <")? + 12;
-    let message_id_end = line[message_id_start..].find('>')? + message_id_start;
-    let message_id = &line[message_id_start..message_id_end];
+    let re = Regex::new(r"Message-ID: <([^>]+)>").unwrap();
+    // Ищем первое совпадение в строке с использованием match
+    let message_id = match re.captures(&line) {
+        Some(cap) => cap[1].to_string(),
+        None => "не найден".to_string(),
+    };
+    // находим size 
+    let re = Regex::new(r"size: (\d+),").unwrap();
+    // Ищем первое совпадение в строке с использованием match
+    let size = match re.captures(&line) {
+        Some(cap) => cap[1].to_string(),
+        None => "не найден".to_string(),
+    };
+   
 
     Some(MessageInfo {
         date: date.to_string(),
@@ -52,6 +79,7 @@ fn parse_line(line: &str) -> Option<MessageInfo> {
         recipient: recipient.to_string(),
         ip_address: ip_address.to_string(),
         message_id: message_id.to_string(),
+        size: size.to_string(),
     })
 }
 
@@ -79,8 +107,9 @@ pub async fn read_files(pool: &rocket::State<PgPool>) -> Result<Json<HelloRespon
         if line.contains("CLEAN") || line.contains("SPAM") {
             if let Some(parsed_info) = parse_line(&line) {
                 response = HelloResponse {
-                    message: format!("Файлы прочитаны {}", parsed_info),
+                    message: format!("Файлы прочитаны {} \n\n {}", &parsed_info, &line),
                 };
+                println!("Файлы прочитаны {} \n\n {}", parsed_info, line);
                 break
             }
         }
