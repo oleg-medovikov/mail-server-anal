@@ -4,33 +4,10 @@ use sqlx::PgPool;
 use chrono::{Datelike, Utc};
 use regex::Regex;
 
-use std::fmt;
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
-struct MessageInfo {
-    date: String,
-    sender: String,
-    recipient: String,
-    ip_address: String,
-    message_id: String,
-    size: String,
-}
-// Реализуем трейт Display для структуры
-impl fmt::Display for MessageInfo {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-        f,
-        "{{ date: {}, sender: {}, recipient: {}, ip_address: {}, message_id: {}, size: {} }}",
-        self.date,
-        self.sender,
-        self.recipient,
-        self.ip_address,
-        self.message_id,
-        self.size,
-    )}
-}
-
+use crate::models::MessageInfo;
 
 fn parse_line(line: &str) -> Option<MessageInfo> {
     // Находим дату

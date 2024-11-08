@@ -5,6 +5,8 @@ use sqlx::PgPool;
 use rocket::fs::{FileServer, relative};
 use rocket::routes;
 
+mod models;
+
 mod api;
 use api::read_files::read_files;
 
