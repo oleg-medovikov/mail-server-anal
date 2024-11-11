@@ -9,8 +9,10 @@ edition = "2021"
 rocket = { version = "0.5.1", features = ["json"] }
 rocket_contrib = {version = "0.4.11", features = ["handlebars_templates"]}
 serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
 sqlx = { version = "0.8.2",  features = [ "postgres",  "runtime-tokio-native-tls", "macros", "runtime-tokio", "chrono" ]}
 tokio = {version = "1.40.0", features= ["full"]}
 dotenv = "0.15.0"
 regex = "1.10.6"
-chrono = "0.4"
+chrono = {version="0.4", features = ["serde"]}
+

@@ -1,6 +1,28 @@
 use std::fmt;
 use chrono::{DateTime, Utc};
+use rocket::form::FromForm;
+use serde::Serialize;
+use sqlx::FromRow;
 
+#[derive(FromForm)]
+pub struct QueryParams {
+    pub page: Option<u32>,
+    pub sender: Option<String>,
+    pub datetime_start: Option<String>,
+    pub datetime_stop: Option<String>,
+}
+
+#[derive(Serialize, FromRow)]
+pub struct Message {
+    pub date: DateTime<Utc>,
+    pub sender: String,
+    pub recipient: String,
+    pub ip: String,
+    pub size: i32,
+    pub passed: String,
+    pub data_box: Option<DateTime<Utc>>,
+    pub status: Option<String>,
+}
 
 pub struct MessageInfo {
     pub date: DateTime<Utc>,
