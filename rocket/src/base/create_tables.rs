@@ -23,8 +23,17 @@ pub async fn create_tables(pool: &PgPool) -> Result<(), sqlx::Error> {
             passed BOOLEAN,
             size INTEGER,
             sender_id SERIAL REFERENCES sender(id),
-            recipient_id SERIAL REFERENCES resipient(id),
+            recipient_id SERIAL REFERENCES recipient(id),
             ip_id SERIAL REFERENCES ip(id)
+        );
+        CREATE TABLE IF NOT EXISTS status(
+            id SERIAL PRIMARY KEY,
+            mess VARCHAR(255) NOT NULL UNIQUE
+        );
+        CREATE TABLE IF NOT EXISTS mess_status (
+            message_id VARCHAR(255) PRIMARY KEY,
+            date TIMESTAMPTZ,
+            status_id SERIAL REFERENCES status(id)
         );
         "#,
     )

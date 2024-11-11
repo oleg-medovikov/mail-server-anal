@@ -1,14 +1,45 @@
 use serde::Serialize;
 use rocket::{get, http::Status, serde::json::Json};
 use sqlx::PgPool;
-use chrono::{Datelike, Utc, NaiveDateTime};
+use chrono::{Datelike, Utc, TimeZone, NaiveDateTime};
 use regex::Regex;
 
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
-use crate::models::MessageInfo;
+use crate::models::{MessageInfo, MessageStatus};
 use crate::base::save_message::save_message;
+use crate::base::save_status::save_status;
+
+fn parsed_status(line: &str) -> Option<MessageStatus> {
+    // Находим дату
+    let date_end = line.find(" lda")?;
+    let now = Utc::now();
+    let year = now.year();
+    let date_str = year.to_string() + " " + &line[..date_end].replace("  ", " ");
+    // Создаем NaiveDateTime из строки
+    let naive_date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S").expect("Не смог прочесть дату");
+    let date = Utc.from_utc_datetime(&naive_date);
+    
+    // Находим статус
+    let status = match line.rsplit(':').next() {
+        Some(result) => result.trim().to_string(),
+        None =>  "не найдена часть строки".to_string(),
+    };
+    // Находим Message-ID
+    let re = Regex::new(r"Info: msgid=<([^>]+)>").unwrap();
+    // Ищем первое совпадение в строке с использованием match
+    let message_id = match re.captures(&line) {
+        Some(cap) => cap[1].to_string(),
+        None => "не найден".to_string(),
+    };
+
+    Some(MessageStatus {
+        message_id: message_id.to_string(),
+        date: date.into(),
+        status: status.to_string(),
+    })
+}
 
 
 fn parse_line(line: &str) -> Option<MessageInfo> {
@@ -16,11 +47,11 @@ fn parse_line(line: &str) -> Option<MessageInfo> {
     let date_end = line.find(" mail")?;
     let now = Utc::now();
     let year = now.year();
-    let date_str = year.to_string() + " " + &line[..date_end];
+    let date_str = year.to_string() + " " + &line[..date_end].replace("  ", " ");
     // Создаем NaiveDateTime из строки
-    let date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S")
-        .expect("не удалось распарсить дату");
-
+    let naive_date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S").expect("Не смог прочесть дату");
+    let date = Utc.from_utc_datetime(&naive_date);
+    
     // Находим отправителя
     let sender_start = line.find('<')? + 1;
     let sender_end = line.find('>')?;
@@ -66,7 +97,7 @@ fn parse_line(line: &str) -> Option<MessageInfo> {
     }
 
     Some(MessageInfo {
-        date,
+        date: date.into(),
         sender: sender.to_string(),
         recipient: recipient.to_string(),
         ip_address: ip_address.to_string(),
@@ -87,27 +118,34 @@ pub struct HelloResponse {
 #[get("/read_files")]
 pub async fn read_files(pool: &rocket::State<PgPool>) -> Result<Json<HelloResponse>, Status> {
     
-    let file = File::open("/home/user/mail_log/test.log").expect("Unable to open file!");
+    let file = File::open("/home/user/mail_log/lda.log").expect("Unable to open file!");
     let reader = BufReader::new(file);
 
-    let mut response = HelloResponse {
-        message: String::from("Файлы прочитаны"),
-    };
+    for line in reader.lines() {
+        let line = line.expect("Unable to read line");
+        
+        if let Some(parsed_status) = parsed_status(&line) {
+            let _ = save_status(&pool, parsed_status).await;
+        }
+    }
+   
+    let file = File::open("/home/user/mail_log/mail.log").expect("Unable to open file!");
+    let reader = BufReader::new(file);
 
     for line in reader.lines() {
         let line = line.expect("Unable to read line");
         
         if line.contains("CLEAN") || line.contains("SPAM") {
             if let Some(parsed_info) = parse_line(&line) {
-                response = HelloResponse {
-                    message: format!("Файлы прочитаны {} \n\n {}", &parsed_info, &line),
-                };
-                println!("Файлы прочитаны {} \n\n {}", &parsed_info, line);
                 let _ = save_message(&pool, parsed_info).await;
-                break
             }
         }
     }
+
+    let response = HelloResponse {
+        message: String::from("Файлы прочитаны"),
+    };
+
 
     Ok(Json(response))
 }

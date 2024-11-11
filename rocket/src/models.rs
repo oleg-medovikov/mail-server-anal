@@ -1,9 +1,9 @@
 use std::fmt;
-use chrono::NaiveDateTime;
+use chrono::{DateTime, Utc};
 
 
 pub struct MessageInfo {
-    pub date: NaiveDateTime,
+    pub date: DateTime<Utc>,
     pub sender: String,
     pub recipient: String,
     pub ip_address: String,
@@ -27,4 +27,8 @@ impl fmt::Display for MessageInfo {
     )}
 }
 
-
+pub struct MessageStatus {
+    pub date: DateTime<Utc>,
+    pub message_id: String,
+    pub status: String,
+}
