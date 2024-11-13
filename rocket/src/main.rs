@@ -13,6 +13,7 @@ mod models;
 mod api;
 use api::read_files::read_files;
 use api::get_messages::get_messages;
+use api::get_senders::get_senders;
 
 
 
@@ -42,5 +43,5 @@ async fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![manual::second])
         .mount("/", FileServer::from(relative!("static")))
-        .mount("/api",  routes![read_files,get_messages]).manage(pool)
+        .mount("/api",  routes![read_files,get_messages, get_senders]).manage(pool)
 }

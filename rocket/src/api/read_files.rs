@@ -1,7 +1,7 @@
 use serde::Serialize;
 use rocket::{get, http::Status, serde::json::Json};
 use sqlx::PgPool;
-use chrono::{Datelike, Utc, TimeZone, NaiveDateTime};
+use chrono::{Datelike, Utc, NaiveDateTime};
 use regex::Regex;
 
 use std::fs::File;
@@ -14,12 +14,16 @@ use crate::base::save_status::save_status;
 fn parsed_status(line: &str) -> Option<MessageStatus> {
     // Находим дату
     let date_end = line.find(" lda")?;
-    let now = Utc::now();
+    let now = Utc::now().naive_local();
     let year = now.year();
     let date_str = year.to_string() + " " + &line[..date_end].replace("  ", " ");
     // Создаем NaiveDateTime из строки
-    let naive_date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S").expect("Не смог прочесть дату");
-    let date = Utc.from_utc_datetime(&naive_date);
+    let mut date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S").expect("Не смог прочесть дату");
+    // Если date > now, вычитаем один год
+    if date > now {
+        date = date.with_year(date.year() - 1).unwrap();
+    }
+    //let date = Utc.from_utc_datetime(&naive_date);
     
     // Находим статус
     let status = match line.rsplit(':').next() {
@@ -36,7 +40,7 @@ fn parsed_status(line: &str) -> Option<MessageStatus> {
 
     Some(MessageStatus {
         message_id: message_id.to_string(),
-        date: date.into(),
+        date,
         status: status.to_string(),
     })
 }
@@ -45,13 +49,16 @@ fn parsed_status(line: &str) -> Option<MessageStatus> {
 fn parse_line(line: &str) -> Option<MessageInfo> {
     // Находим дату
     let date_end = line.find(" mail")?;
-    let now = Utc::now();
+    let now = Utc::now().naive_local();
     let year = now.year();
     let date_str = year.to_string() + " " + &line[..date_end].replace("  ", " ");
     // Создаем NaiveDateTime из строки
-    let naive_date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S").expect("Не смог прочесть дату");
-    let date = Utc.from_utc_datetime(&naive_date);
-    
+    let mut date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S").expect("Не смог прочесть дату");
+    // Если date > now, вычитаем один год
+    if date > now {
+        date = date.with_year(date.year() - 1).unwrap();
+    }
+   
     // Находим отправителя
     let sender_start = line.find('<')? + 1;
     let sender_end = line.find('>')?;
@@ -97,7 +104,7 @@ fn parse_line(line: &str) -> Option<MessageInfo> {
     }
 
     Some(MessageInfo {
-        date: date.into(),
+        date,
         sender: sender.to_string(),
         recipient: recipient.to_string(),
         ip_address: ip_address.to_string(),
@@ -118,7 +125,7 @@ pub struct HelloResponse {
 #[get("/read_files")]
 pub async fn read_files(pool: &rocket::State<PgPool>) -> Result<Json<HelloResponse>, Status> {
     
-    let file = File::open("/home/user/mail_log/lda.log").expect("Unable to open file!");
+    let file = File::open("/home/user/mail_log/lda_log_delta").expect("Unable to open file!");
     let reader = BufReader::new(file);
 
     for line in reader.lines() {
@@ -129,7 +136,7 @@ pub async fn read_files(pool: &rocket::State<PgPool>) -> Result<Json<HelloRespon
         }
     }
    
-    let file = File::open("/home/user/mail_log/mail.log").expect("Unable to open file!");
+    let file = File::open("/home/user/mail_log/mail_log_delta").expect("Unable to open file!");
     let reader = BufReader::new(file);
 
     for line in reader.lines() {

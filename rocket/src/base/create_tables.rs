@@ -16,10 +16,9 @@ pub async fn create_tables(pool: &PgPool) -> Result<(), sqlx::Error> {
             id SERIAL PRIMARY KEY,
             ip VARCHAR(255) NOT NULL UNIQUE
         );
-
         CREATE TABLE IF NOT EXISTS message (
             id VARCHAR(255) PRIMARY KEY,
-            date TIMESTAMPTZ,
+            date TIMESTAMP,
             passed BOOLEAN,
             size INTEGER,
             sender_id SERIAL REFERENCES sender(id),
@@ -32,7 +31,7 @@ pub async fn create_tables(pool: &PgPool) -> Result<(), sqlx::Error> {
         );
         CREATE TABLE IF NOT EXISTS mess_status (
             message_id VARCHAR(255) PRIMARY KEY,
-            date TIMESTAMPTZ,
+            date TIMESTAMP,
             status_id SERIAL REFERENCES status(id)
         );
         "#,

@@ -1,5 +1,5 @@
 use std::fmt;
-use chrono::{DateTime, Utc};
+use chrono::NaiveDateTime;
 use rocket::form::FromForm;
 use serde::Serialize;
 use sqlx::FromRow;
@@ -14,18 +14,18 @@ pub struct QueryParams {
 
 #[derive(Serialize, FromRow)]
 pub struct Message {
-    pub date: DateTime<Utc>,
+    pub date: NaiveDateTime,
     pub sender: String,
     pub recipient: String,
     pub ip: String,
     pub size: i32,
     pub passed: String,
-    pub data_box: Option<DateTime<Utc>>,
+    pub data_box: Option<NaiveDateTime>,
     pub status: Option<String>,
 }
 
 pub struct MessageInfo {
-    pub date: DateTime<Utc>,
+    pub date: NaiveDateTime,
     pub sender: String,
     pub recipient: String,
     pub ip_address: String,
@@ -50,7 +50,7 @@ impl fmt::Display for MessageInfo {
 }
 
 pub struct MessageStatus {
-    pub date: DateTime<Utc>,
+    pub date: NaiveDateTime,
     pub message_id: String,
     pub status: String,
 }
