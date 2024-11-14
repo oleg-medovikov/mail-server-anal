@@ -1,2 +1,2 @@
-/api/target
-/web/target
+/target
+.env
