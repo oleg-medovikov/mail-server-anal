@@ -1,11 +1,11 @@
-use rocket::{post, serde::json::Json, form::Form};
+use rocket::{post, serde::json::Json};
 use sqlx::PgPool;
 use crate::models::{QueryParams, Message};
 
-#[post("/messages", data = "<params>")]
-pub async fn get_messages(params: Form<QueryParams>, pool: &rocket::State<PgPool>) -> Result<Json<Vec<Message>>, rocket::response::Debug<sqlx::Error>> {
-    let page = params.page.unwrap_or(1);
-    let offset = (page - 1) * 100;
+#[post("/messages", format = "json", data = "<params>")]
+pub async fn get_messages(params: Json<QueryParams>, pool: &rocket::State<PgPool>) -> Result<Json<Vec<Message>>, rocket::response::Debug<sqlx::Error>> {
+    let page = params.page;
+    let offset = (page - 1) * 50;
 
     let mut query = String::from(
         r#"

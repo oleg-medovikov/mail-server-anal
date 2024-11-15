@@ -1,0 +1,489 @@
+@import "./../fonts/Gilroy/stylesheet.css";
+/* Reset and base styles  */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Inter:wght@400;600&display=swap");
+* {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Links */
+a, a:link, a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Common */
+aside, nav, footer, header, section, main {
+  display: block;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+ul, ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+address {
+  font-style: normal;
+}
+
+/* Form */
+input, textarea, button, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: transparent;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button, input[type=submit] {
+  display: inline-block;
+  box-shadow: none;
+  background-color: transparent;
+  background: none;
+  cursor: pointer;
+}
+
+input:focus, input:active,
+button:focus, button:active {
+  outline: none;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+label {
+  cursor: pointer;
+}
+
+legend {
+  display: block;
+}
+
+:root {
+  --text-color: #1e1e1e;
+  --text-muted: #8d8d8d;
+  --text-card-dark-blue: #0d1b39;
+  --accent: #e58411;
+  --header-text-color: rgba(255, 255, 255, 0.759);
+  --footer-accent: #f6973f;
+  --footer-bg: #2d2f33;
+  --footer-text-color: rgba(255, 255, 255, 0.8);
+  --ui-orange: #e58411;
+  --ui-biruza: #00d6c9;
+  --ui-gray: #7c7c7c;
+  --ui-dark-blue: #e5861179;
+  --font-main: "Gilroy", sans-serif;
+  --font-cards: "Inter", sans-serif;
+  --font-footer-accent: "DM Sans", sans-serif;
+}
+
+html,
+body {
+  font-family: var(--font-main);
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1310px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+.container--small {
+  max-width: 1094px;
+}
+
+.none {
+  display: none !important;
+}
+
+.title-2 {
+  font-weight: 700;
+  font-size: clamp(32px, 1.702rem + 1.49vw, 42px);
+}
+
+.header {
+  position: relative;
+  padding-top: 40px;
+  background-color: var(--footer-bg);
+  background-size: cover;
+  aspect-ratio: 1440/1084;
+  color: var(--header-text-color);
+}
+
+.header a {
+  color: var(--header-text-color);
+}
+@media (max-width: 629px) {
+  .header {
+    padding-top: 20px;
+    padding-bottom: 240px;
+    background-position: center;
+    aspect-ratio: unset;
+  }
+}
+
+.header__nav {
+  margin-bottom: clamp(20px, 0.071rem + 5.89vw, 86px);
+}
+
+.header__content {
+  text-align: center;
+}
+
+.header__title {
+  margin-bottom: 14px;
+  font-weight: 700;
+  font-size: clamp(28px, 0.821rem + 4.64vw, 80px);
+  text-wrap: balance;
+  line-height: 130%; /* 104px */
+  letter-spacing: -0.8px;
+  text-transform: capitalize;
+}
+
+.header__content p {
+  margin: 0 auto;
+  max-width: 606px;
+  opacity: 0.8;
+  font-size: clamp(16px, 0.857rem + 0.71vw, 24px);
+  line-height: 160%; /* 38.4px */
+  text-wrap: balance;
+}
+
+.header__search {
+  position: relative;
+  display: inline-block;
+  margin: 45px auto 0;
+}
+@media (max-width: 819px) {
+  .header__search {
+    display: none; /* TEST */
+  }
+}
+
+.logo {
+  font-weight: 700;
+  font-size: clamp(18px, 0.946rem + 0.89vw, 28px);
+  letter-spacing: 0.28px;
+  text-transform: capitalize;
+  color: #fff !important;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: 2fr 8fr 2fr;
+  gap: 20px;
+}
+
+.nav__logo {
+  align-self: center;
+}
+
+.nav__btn {
+  display: none;
+}
+@media (max-width: 992px) {
+  .nav__btn {
+    display: block;
+  }
+}
+
+.nav-list {
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 65px;
+  font-weight: 500;
+  font-size: 18px;
+}
+@media (max-width: 992px) {
+  .nav-list {
+    display: none;
+  }
+}
+
+.nav-list__item {
+  position: relative;
+  padding: 10px 0;
+}
+
+.nav-list__link {
+  transition: opacity 0.1s ease-in;
+}
+.nav-list__link:hover {
+  opacity: 0.7;
+}
+.nav-list__link--dropdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-list__link--dropdown::after {
+  content: url("./../img/icons/arrow-down.svg");
+  height: 18px;
+}
+
+.nav-list__sub-nav {
+  opacity: 0;
+  width: 160px;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  transform: translate(0%, 10%);
+  transition: all 0.2s ease-in;
+}
+
+.nav-list__item:hover .nav-list__sub-nav {
+  pointer-events: all;
+  opacity: 1;
+  transform: translate(0%, 0%);
+}
+
+.sub-nav {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 16px;
+  background-color: var(--footer-bg);
+  color: var(--footer-text-color);
+  font-size: 16px;
+}
+.sub-nav a {
+  color: var(--footer-text-color);
+  transition: color 0.1s ease-in;
+}
+.sub-nav a:hover {
+  color: var(--accent);
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+  max-width: 400px;
+  padding: 8px 8px 8px 20px;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+  width: 300px;
+  border-radius: 42px;
+  border: 0.862px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+}
+
+.search-form__input {
+  flex-grow: 1;
+  color: rgba(255, 255, 255, 0.759);
+  font-size: 18px;
+  font-weight: 500px;
+  line-height: 150%; /* 27px */
+}
+.search-form__input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.759);
+  font-weight: 400;
+}
+.search-form__input::placeholder {
+  color: rgba(255, 255, 255, 0.759);
+  font-weight: 400;
+}
+
+.search-form__btn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 24px;
+  background: var(--accent);
+}
+
+/* Добавленные стили для таблицы */
+.centered-table {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px; 
+  overflow: hidden; 
+}
+
+.centered-table th,
+.centered-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.centered-table th {
+  background-color: var(--ui-dark-blue);
+  color: rgba(255, 255, 255, 0.759);
+}
+
+.centered-table tbody tr:nth-child(even) {
+  background-color: #2d2f33;
+}
+
+.centered-table tbody tr:hover {
+  background-color: #37383cca;
+}
+
+.container-table {
+  position: relative;
+  margin-top: 40px; 
+}
+
+body.modal-open {
+  overflow: hidden; /* Блокируем прокрутку основного контента */
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0; 
+  background-color: #2d2f33;
+  border: 1px solid #ddd; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%; 
+  z-index: 1000; 
+  padding: 8px 0; 
+}
+
+.search-results div {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease; 
+  color: #fff; 
+  text-align: left; 
+}
+
+.search-results div:hover {
+  background-color: #37383cca; 
+}
+
+/* Добавьте стили для календаря и кнопки сортировки */
+.flatpickr-calendar {
+  margin-top: 10px;
+}
+.sort-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.container-table {
+  margin-top: 20px;
+}
+.table-wrapper {
+  overflow-x: auto;
+}
+.centered-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.centered-table th, .centered-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #2d2f33;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 12px;
+  position: relative; /* Добавляем относительное позиционирование */
+}
+
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute; /* Добавляем абсолютное позиционирование */
+  top: 5px; /* Располагаем сверху */
+  right: 10px; /* Располагаем слева */
+}
+
+.close:hover,
+.close:focus {
+  color: #ccc;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.date-pickers {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.date-pickers input {
+  width: 45%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#apply-filter {
+  padding: 10px 20px;
+  background-color: #e58411;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#apply-filter:hover {
+  background-color: #e39536;
+}
+
+h2{
+  margin-bottom: 10px;
+}

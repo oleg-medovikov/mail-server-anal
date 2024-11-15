@@ -1,12 +1,11 @@
 use std::fmt;
 use chrono::NaiveDateTime;
-use rocket::form::FromForm;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
 
-#[derive(FromForm)]
+#[derive(Deserialize)]
 pub struct QueryParams {
-    pub page: Option<u32>,
+    pub page: u32,
     pub sender: Option<String>,
     pub datetime_start: Option<String>,
     pub datetime_stop: Option<String>,

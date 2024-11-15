@@ -1,29 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read Files</title>
-    <style>
-        /* Custom CSS styles if needed */
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>МИАЦ</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-    <button id="read-files-button">Прочитать файлы</button>
+    <header class="header">
+        <div class="container">
+            <nav class="header__nav nav">
+                <div class="nav__logo">
+                    <a href="#!" class="logo">МИАЦ</a>
+                </div>
+                <ul class="nav-list">
+                    <li class="nav-list__item">
+                        <a href="#furniture" class="nav-list__link nav-list__link--dropdown">Меню</a>
+                        <div class="nav-list__sub-nav">
+                            <ul class="sub-nav" id="sub-nav-list">
+                                <li class="sub-nav__item"><a href="#!" class="sub-nav__link">Заглушка</a></li>
+                                <li class="sub-nav__item"><a href="#!" class="sub-nav__link">Заглушка</a></li>
+                                <li class="sub-nav__item"><a href="#!" class="sub-nav__link">Заглушка</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-list__item">
+                        <a href="#!" class="nav-list__link">Заглушка</a>
+                    </li>
+                    <li class="nav-list__item">
+                        <a href="#!" class="nav-list__link period-trigger">Период</a>
+                    </li>
+                    <li class="nav-list__item">
+                        <a href="#!" class="nav-list__link sort-trigger">Сортировка</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div id="calendar-container" class="calendar-container" style="display: none;">
+                <input type="text" id="datetime-picker" class="datetime-picker" placeholder="Выберите дату и время">
+                <button class="sort-button">Сортировать</button>
+            </div>
 
-    <script>
-        function readFileButton() {
-            fetch('api/read_files')
-                .then(response => response.json()) // Parse response as JSON
-                .then(data => {
-                    const message = data.message;
-                    alert(`Сообщение от сервера: ${message}`); // Display message in pop-up window
-                })
-                .catch(error => console.error('Error:', error));
-        }
+            <div id="modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Выберите период</h2>
+                    <div class="date-pickers">
+                        <input type="text" id="start-date" class="start-date" placeholder="Начало">
+                        <input type="text" id="end-date" class="end-date" placeholder="Конец">
+                    </div>
+                    <button id="apply-filter" class="apply-filter">Применить</button>
+                </div>
+            </div>
 
-        document.getElementById('read-files-button').addEventListener('click', readFileButton);
-    </script>
+            <div class="header__content">
+                <!-- <h1 class="header__title">
+                    Почта
+                </h1> -->
+                <div class="header__search">
+                    <form action="" class="search-form">
+                        <input
+                            placeholder="Поиск по отправителем"
+                            type="text"
+                            class="search-form__input"
+                            autocomplete="off"
+                        />
+                        <button class="search-form__btn">
+                            <img src="./img/icons/search.svg" alt="Поиск" />
+                        </button>
+                    </form>
+                    <div class="search-results" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-table">
+            <div class="table-wrapper">
+                <table id="messages-table" class="centered-table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Отправитель</th>
+                            <th>Получатель</th>
+                            <th>IP</th>
+                            <th>Размер</th>
+                            <th>Проверка</th>
+                            <th>Data Box</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- данные с таблички JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    </header>
+
+    <script src="./js/table.js"></script>
+    <script src="./js/sender.js"></script>
+    <script src="./js/calendar.js"></script>
 </body>
 </html>
-
