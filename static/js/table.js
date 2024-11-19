@@ -3,6 +3,7 @@ const tbody = messagesTable.querySelector('tbody');
 
 // Загрузка данных с сервера и отображение их в таблице
 async function fetchMessages() {
+    const pageNumber = document.getElementById('page-number');
     const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
     const inputSender = document.getElementById('input-sender');
@@ -14,7 +15,7 @@ async function fetchMessages() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              page: 1,
+              page: parseInt(pageNumber.value),
               sender: inputSender.value || null,
               datetime_start: startDateInput.value || null,
               datetime_stop: endDateInput.value || null
@@ -75,10 +76,10 @@ function displayMessages(messages) {
             <td>${message.sender}</td>
             <td>${message.recipient}</td>
             <td>${message.ip}</td>
-            <td>${formatSize(message.size)}</td>
+            <td class="column-status">${formatSize(message.size)}</td>
             <td>${message.passed}</td>
             <td>${formatDate(message.data_box)}</td>
-            <td>${formatString(message.status)}</td>
+            <td class="column-status">${formatString(message.status)}</td>
         `;
         tbody.appendChild(row);
     });

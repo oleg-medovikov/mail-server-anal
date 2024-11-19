@@ -22,7 +22,7 @@
                         <a href="#!" class="nav-list__link period-trigger">Период</a>
                     </li>
                     <li class="nav-list__item">
-                        <a href="#!" id="apply-filter" class="nav-list__link">Обновить таблицу</a>
+                        <a href="#!" id="apply-filter" class="apply-filter nav-list__link">Обновить таблицу</a>
                     </li>
                     <li class="nav-list__item">
                         <a href="#!" id="logoutButton" class="nav-list__link sort-trigger">Выйти</a>
@@ -38,25 +38,22 @@
                         <input type="text" id="start-date" class="start-date" placeholder="Начало">
                         <input type="text" id="end-date" class="end-date" placeholder="Конец">
                     </div>
-                    <button id="apply-filter" class="apply-filter">Применить</button>
+                    <button id="clean-filter" class="apply-filter">Очистить</button>
                 </div>
             </div>
 
             <div class="header__content">
-                <!-- <h1 class="header__title">
-                    Почта
-                </h1> -->
                 <div class="header__search">
                     <form action="" class="search-form">
                         <input
                             id="input-sender"
-                            placeholder="Поиск по отправителем"
+                            placeholder="Поиск по отправителям"
                             type="text"
                             class="search-form__input"
                             autocomplete="off"
                         />
-                        <button class="search-form__btn">
-                            <img src="./img/icons/search.svg" alt="Поиск" />
+                        <button type="button" class="search-form__btn">
+                            <img class="cross" src="./img/icons/icon-cross.png" alt="Поиск" />
                         </button>
                     </form>
                     <div class="search-results" style="display: none;"></div>
@@ -65,30 +62,37 @@
         </div>
 
         <div class="container-table">
-            <div class="table-wrapper">
-                <table id="messages-table" class="centered-table">
-                    <thead>
-                        <tr>
-                            <th>Дата</th>
-                            <th>Отправитель</th>
-                            <th>Получатель</th>
-                            <th>IP</th>
-                            <th>Размер</th>
-                            <th>Проверка</th>
-                            <th>Data Box</th>
-                            <th>Статус</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- данные с таблички JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+              <div class="pagination">
+                  <img src="./img/icons/slider-left.svg" id="prev-page" alt="Предыдущая">
+                  <input type="number" id="page-number" min="1" value="1">
+                  <img src="./img/icons/slider-right.svg" id="next-page" alt="Следующая">
+              </div>
+              <div class="table-wrapper">
+                  <table id="messages-table" class="centered-table">
+                      <thead>
+                          <tr>
+                              <th>Дата</th>
+                              <th>Отправитель</th>
+                              <th>Получатель</th>
+                              <th>IP</th>
+                              <th>Размер</th>
+                              <th>Проверка</th>
+                              <th>Data Box</th>
+                              <th class="status-column">Статус</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <!-- данные с таблички JS -->
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+
+
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     </header>
 
-    <script src="./js/loginCheck.js"></script>
+    <!-- <script src="./js/loginCheck.js"></script> -->
     <script src="./js/table.js"></script>
     <script src="./js/sender.js"></script>
     <script src="./js/calendar.js"></script>

@@ -230,7 +230,9 @@ body {
     display: none;
   }
 }
-
+.column-status{
+  min-width: 100px;
+}
 .nav-list__item {
   position: relative;
   padding: 10px 0;
@@ -486,4 +488,22 @@ body.modal-open {
 
 h2{
   margin-bottom: 10px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-left: 40%;
+}
+.pagination img {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px;
+}
+.pagination input {
+  width: 50px;
+  text-align: center;
 }
