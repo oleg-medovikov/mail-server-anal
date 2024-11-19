@@ -20,7 +20,7 @@ fn parsed_status(line: &str) -> Option<MessageStatus> {
     // Создаем NaiveDateTime из строки
     let mut date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S").expect("Не смог прочесть дату");
     // Если date > now, вычитаем один год
-    if date > now {
+    if date.month() > now.month() {
         date = date.with_year(date.year() - 1).unwrap();
     }
     //let date = Utc.from_utc_datetime(&naive_date);
@@ -55,7 +55,7 @@ fn parse_line(line: &str) -> Option<MessageInfo> {
     // Создаем NaiveDateTime из строки
     let mut date = NaiveDateTime::parse_from_str(&date_str, "%Y %b %e %H:%M:%S").expect("Не смог прочесть дату");
     // Если date > now, вычитаем один год
-    if date > now {
+    if date.month() > now.month() {
         date = date.with_year(date.year() - 1).unwrap();
     }
    

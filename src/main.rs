@@ -14,8 +14,9 @@ mod api;
 use api::read_files::read_files;
 use api::get_messages::get_messages;
 use api::get_senders::get_senders;
-
-
+use api::check_token::check_token;
+use api::user_login::user_login;
+use api::drop_token::drop_token;
 
 mod manual {
     use std::path::{PathBuf, Path};
@@ -43,5 +44,5 @@ async fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![manual::second])
         .mount("/", FileServer::from(relative!("static")))
-        .mount("/api",  routes![read_files,get_messages, get_senders]).manage(pool)
+        .mount("/api",  routes![read_files,get_messages, get_senders, check_token, user_login, drop_token]).manage(pool)
 }
