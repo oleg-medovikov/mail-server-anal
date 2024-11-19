@@ -76,32 +76,6 @@ if (startDatePicker && endDatePicker) {
         }
     });
 }
-
-flatpickr(datetimePicker, {
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    time_24hr: true,
-    onChange: function(selectedDates, dateStr, instance) {
-        if (selectedDates.length > 0) {
-            sortButton.style.display = 'block';
-        } else {
-            sortButton.style.display = 'none';
-        }
-    }
-});
-
-sortTrigger.addEventListener('click', () => {
-    calendarContainer.style.display = 'block';
-});
-
-sortButton.addEventListener('click', () => {
-    const selectedDate = datetimePicker.value;
-    if (selectedDate) {
-        sortTableByDateTime(selectedDate);
-        calendarContainer.style.display = 'none'; // Скрываем календарь после сортировки
-    }
-});
-
 function sortTableByDateTime(selectedDate) {
     const rows = Array.from(tbody.querySelectorAll('tr'));
     rows.sort((a, b) => {
