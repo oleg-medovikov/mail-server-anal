@@ -17,31 +17,18 @@
                 </div>
                 <ul class="nav-list">
                     <li class="nav-list__item">
-                        <a href="#furniture" class="nav-list__link nav-list__link--dropdown">Меню</a>
-                        <div class="nav-list__sub-nav">
-                            <ul class="sub-nav" id="sub-nav-list">
-                                <li class="sub-nav__item"><a href="#!" class="sub-nav__link">Заглушка</a></li>
-                                <li class="sub-nav__item"><a href="#!" class="sub-nav__link">Заглушка</a></li>
-                                <li class="sub-nav__item"><a href="#!" class="sub-nav__link">Заглушка</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-list__item">
-                        <a href="#!" class="nav-list__link">Заглушка</a>
                     </li>
                     <li class="nav-list__item">
                         <a href="#!" class="nav-list__link period-trigger">Период</a>
+                    </li>
+                    <li class="nav-list__item">
+                        <a href="#!" id="apply-filter" class="nav-list__link">Обновить таблицу</a>
                     </li>
                     <li class="nav-list__item">
                         <a href="#!" id="logoutButton" class="nav-list__link sort-trigger">Выйти</a>
                     </li>
                 </ul>
             </nav>
-            
-            <div id="calendar-container" class="calendar-container" style="display: none;">
-                <input type="text" id="datetime-picker" class="datetime-picker" placeholder="Выберите дату и время">
-                <button class="sort-button">Сортировать</button>
-            </div>
 
             <div id="modal" class="modal" style="display: none;">
                 <div class="modal-content">
@@ -62,6 +49,7 @@
                 <div class="header__search">
                     <form action="" class="search-form">
                         <input
+                            id="input-sender"
                             placeholder="Поиск по отправителем"
                             type="text"
                             class="search-form__input"

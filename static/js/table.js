@@ -2,13 +2,10 @@ const messagesTable = document.getElementById('messages-table');
 const tbody = messagesTable.querySelector('tbody');
 
 // Загрузка данных с сервера и отображение их в таблице
-async function fetchMessages(startDate = null, endDate = null) {
-    const json = {
-        page: 1,
-        sender: null,
-        datetime_start: startDate,
-        datetime_stop: endDate
-    };
+async function fetchMessages() {
+    const startDateInput = document.getElementById('start-date');
+    const endDateInput = document.getElementById('end-date');
+    const inputSender = document.getElementById('input-sender');
 
     try {
         const response = await fetch('/api/messages', {
@@ -16,7 +13,12 @@ async function fetchMessages(startDate = null, endDate = null) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(json)
+            body: JSON.stringify({
+              page: 1,
+              sender: inputSender.value || null,
+              datetime_start: startDateInput.value || null,
+              datetime_stop: endDateInput.value || null
+            })
         });
 
         if (!response.ok) {
@@ -89,4 +91,9 @@ window.addEventListener('load', () => {
     }).catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
+});
+
+// Обработчик для кнопки "Обновить таблицу"
+document.getElementById('apply-filter').addEventListener('click', () => {
+    fetchMessages();
 });

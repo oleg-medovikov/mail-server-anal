@@ -1,17 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import "./../fonts/Gilroy/stylesheet.css";
+/* Reset and base styles  */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Inter:wght@400;600&display=swap");
+* {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+}
 
-*, html, body {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
-	font-family: "Roboto", sans-serif;
+  font-family: "Gilroy", sans-serif;;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, #f3964541, #00a5b735);
+  background: #2d2f33;
+  color: #ffffff;
 
 }
 
@@ -23,7 +32,7 @@ body {
   grid-template-areas: "login";
   box-shadow: 0 0 17px 10px rgb(0 0 0 / 30%);
   border-radius: 20px;
-  background: white;
+  background: #2d2f33;
   overflow: hidden;
 }
 
@@ -43,7 +52,7 @@ body {
   position: absolute;
   width: 80px;
   height: 200px;
-  background: linear-gradient(to right, #f39545, #00a6b7);  border-radius: 40px;
+  background: #e58411;  border-radius: 40px;
 }
 
 .design .pill-2 {
@@ -52,7 +61,7 @@ body {
   position: absolute;
   height: 450px;
   width: 220px;
-  background: linear-gradient(to right, #f39545, #00a6b7);  border-radius: 200px;
+  background: #e58411;   border-radius: 200px;
   border: 30px solid #e2c5e2;
 }
 
@@ -62,7 +71,7 @@ body {
   position: absolute;
   height: 200px;
   width: 100px;
-  background: linear-gradient(to right, #f39545, #00a6b7);  border-radius: 70px;
+  background: #e58411;   border-radius: 70px;
 }
 
 .design .pill-4 {
@@ -71,7 +80,7 @@ body {
   position: absolute;
   height: 300px;
   width: 120px;
-  background: linear-gradient(to right, #f39545, #00a6b7);  border-radius: 70px;
+  background: #e58411;   border-radius: 70px;
 }
 
 .login {
@@ -81,7 +90,7 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: white;
+  background: #2d2f33;
 }
 
 .login h3.title {
@@ -90,12 +99,13 @@ body {
 }
 
 .text-input {
-  background: #e7f0fe;
+  background: #E8F0FE;
   height: 40px;
   display: flex;
   /* width: 100%; */
   align-items: center;
   border-radius: 10px;
+  border: solid #ffffff;
   padding: 0 15px;
   margin: 5px 0;
 }
@@ -110,18 +120,17 @@ body {
 }
 
 .text-input i {
-  color: #686868;
+  color: #2d2f33;
 }
 
 ::placeholder {
-  color: #9a9a9a;
+  color: #2d2f33;
 }
-
 .login-btn {
   width: 100%;
   padding: 10px;
   color: white;
-  background: linear-gradient(to right, #f39545, #00a6b7);  border: none;
+  background: #e58411;  border: none;
   border-radius: 20px;
   cursor: pointer;
   margin-top: 10px;
@@ -129,7 +138,7 @@ body {
 
 a {
   font-size: 12px;
-  color: #9a9a9a;
+  color: #ffffff;
   cursor: pointer;
   user-select: none;
   text-decoration: none;
