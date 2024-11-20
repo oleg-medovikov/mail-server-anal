@@ -16,7 +16,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
   })
   .then(response => {
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('Ответ сети был неудовлетворительным:');
     }
     return response.json();
   })
@@ -25,8 +25,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     window.location.href = 'index.html';
   })
   .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
+    console.error('Возникла проблема с операцией выборки:', error);
 
-    alert('Login failed. Please check your credentials.');
+    alert('Ошибка входа. Пожалуйста, проверьте свои учетные данные');
   });
 });

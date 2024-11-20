@@ -1,13 +1,19 @@
 @import "./../fonts/Gilroy/stylesheet.css";
+/* Reset and base styles  */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Inter:wght@400;600&display=swap");
-
 * {
-  padding: 0;
-  margin: 0;
+  padding: 0px;
+  margin: 0px;
   border: none;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+/* Links */
 a, a:link, a:visited {
   text-decoration: none;
 }
@@ -16,6 +22,7 @@ a:hover {
   text-decoration: none;
 }
 
+/* Common */
 aside, nav, footer, header, section, main {
   display: block;
 }
@@ -29,8 +36,11 @@ ul, ul li {
   list-style: none;
 }
 
-img, svg {
+img {
   vertical-align: top;
+}
+
+img, svg {
   max-width: 100%;
   height: auto;
 }
@@ -39,6 +49,7 @@ address {
   font-style: normal;
 }
 
+/* Form */
 input, textarea, button, select {
   font-family: inherit;
   font-size: inherit;
@@ -94,7 +105,8 @@ legend {
   --font-footer-accent: "DM Sans", sans-serif;
 }
 
-html, body {
+html,
+body {
   font-family: var(--font-main);
   color: var(--text-color);
 }
@@ -103,6 +115,18 @@ html, body {
   max-width: 1310px;
   padding: 0 15px;
   margin: 0 auto;
+}
+.container--small {
+  max-width: 1094px;
+}
+
+.none {
+  display: none !important;
+}
+
+.title-2 {
+  font-weight: 700;
+  font-size: clamp(32px, 1.702rem + 1.49vw, 42px);
 }
 
 .header {
@@ -117,7 +141,6 @@ html, body {
 .header a {
   color: var(--header-text-color);
 }
-
 @media (max-width: 629px) {
   .header {
     padding-top: 20px;
@@ -140,7 +163,7 @@ html, body {
   font-weight: 700;
   font-size: clamp(28px, 0.821rem + 4.64vw, 80px);
   text-wrap: balance;
-  line-height: 130%;
+  line-height: 130%; /* 104px */
   letter-spacing: -0.8px;
   text-transform: capitalize;
 }
@@ -150,7 +173,7 @@ html, body {
   max-width: 606px;
   opacity: 0.8;
   font-size: clamp(16px, 0.857rem + 0.71vw, 24px);
-  line-height: 160%;
+  line-height: 160%; /* 38.4px */
   text-wrap: balance;
 }
 
@@ -159,10 +182,9 @@ html, body {
   display: inline-block;
   margin: 45px auto 0;
 }
-
 @media (max-width: 819px) {
   .header__search {
-    display: none;
+    display: none; /* TEST */
   }
 }
 
@@ -187,7 +209,6 @@ html, body {
 .nav__btn {
   display: none;
 }
-
 @media (max-width: 992px) {
   .nav__btn {
     display: block;
@@ -204,7 +225,6 @@ html, body {
   font-weight: 500;
   font-size: 18px;
 }
-
 @media (max-width: 992px) {
   .nav-list {
     display: none;
@@ -219,17 +239,14 @@ html, body {
 .nav-list__link {
   transition: opacity 0.1s ease-in;
 }
-
 .nav-list__link:hover {
   opacity: 0.7;
 }
-
 .nav-list__link--dropdown {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
 .nav-list__link--dropdown::after {
   content: url("./../img/icons/arrow-down.svg");
   height: 18px;
@@ -261,12 +278,10 @@ html, body {
   color: var(--footer-text-color);
   font-size: 16px;
 }
-
 .sub-nav a {
   color: var(--footer-text-color);
   transition: color 0.1s ease-in;
 }
-
 .sub-nav a:hover {
   color: var(--accent);
 }
@@ -283,7 +298,8 @@ html, body {
   border-radius: 42px;
   border: 0.862px solid rgba(255, 255, 255, 0.6);
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
 }
 
 .search-form__input {
@@ -291,14 +307,12 @@ html, body {
   color: rgba(255, 255, 255, 0.759);
   font-size: 18px;
   font-weight: 500px;
-  line-height: 150%;
+  line-height: 150%; /* 27px */
 }
-
 .search-form__input::-moz-placeholder {
   color: rgba(255, 255, 255, 0.759);
   font-weight: 400;
 }
-
 .search-form__input::placeholder {
   color: rgba(255, 255, 255, 0.759);
   font-weight: 400;
@@ -312,6 +326,7 @@ html, body {
   background: var(--accent);
 }
 
+/* Добавленные стили для таблицы */
 .centered-table {
   width: 100%;
   max-width: 800px;
@@ -319,8 +334,8 @@ html, body {
   border-collapse: collapse;
   border: 1px solid #ddd;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 12px; 
+  overflow: hidden; 
 }
 
 .centered-table th,
@@ -345,56 +360,63 @@ html, body {
 
 .container-table {
   position: relative;
-  margin-top: 40px;
+  margin-top: 40px; 
 }
 
 body.modal-open {
-  overflow: hidden;
+  overflow: hidden; /* Блокируем прокрутку основного контента */
 }
 
 .search-results {
   position: absolute;
   top: calc(100% + 5px);
-  left: 0;
+  left: 0; 
   background-color: #2d2f33;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   max-height: 200px;
   overflow-y: auto;
-  width: 100%;
-  z-index: 1000;
-  padding: 8px 0;
+  width: 100%; 
+  z-index: 1000; 
+  padding: 8px 0; 
 }
 
 .search-results div {
   padding: 8px 16px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  color: #fff;
-  text-align: left;
+  transition: background-color 0.2s ease; 
+  color: #fff; 
+  text-align: left; 
 }
 
 .search-results div:hover {
-  background-color: #37383cca;
+  background-color: #37383cca; 
 }
 
+/* Добавьте стили для календаря и кнопки сортировки */
 .flatpickr-calendar {
   margin-top: 10px;
 }
-
 .sort-button {
   margin-top: 10px;
   padding: 8px 16px;
   cursor: pointer;
 }
-
 .container-table {
   margin-top: 20px;
 }
-
 .table-wrapper {
   overflow-x: auto;
+}
+.centered-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.centered-table th, .centered-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
 }
 
 .modal {
@@ -417,16 +439,16 @@ body.modal-open {
   width: 80%;
   max-width: 600px;
   border-radius: 12px;
-  position: relative;
+  position: relative; /* Добавляем относительное позиционирование */
 }
 
 .close {
   color: #aaa;
   font-size: 28px;
   font-weight: bold;
-  position: absolute;
-  top: 5px;
-  right: 10px;
+  position: absolute; /* Добавляем абсолютное позиционирование */
+  top: 5px; /* Располагаем сверху */
+  right: 10px; /* Располагаем слева */
 }
 
 .close:hover,
@@ -462,26 +484,6 @@ body.modal-open {
   background-color: #e39536;
 }
 
-h2 {
+h2{
   margin-bottom: 10px;
-}
-
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  margin-left: 40%;
-}
-
-.pagination img {
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-  margin: 0 10px;
-}
-
-.pagination input {
-  width: 50px;
-  text-align: center;
 }

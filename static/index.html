@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>МИАЦ</title>
-    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="icon" href="./img/icons/">
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/table.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
+    <link rel="stylesheet" href="./css/search.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
@@ -13,7 +18,7 @@
         <div class="container">
             <nav class="header__nav nav">
                 <div class="nav__logo">
-                    <a href="#!" class="logo">МИАЦ</a>
+                    <a href="#!" class="logo"><img src="./img/icons/miac.png" alt="miac"></a>
                 </div>
                 <ul class="nav-list">
                     <li class="nav-list__item">
@@ -45,7 +50,7 @@
                     <form action="" class="search-form">
                         <input
                             id="input-sender"
-                            placeholder="Поиск по отправителям"
+                            placeholder="Поиск по отправителем"
                             type="text"
                             class="search-form__input"
                             autocomplete="off"
@@ -73,10 +78,10 @@
                             <th>Отправитель</th>
                             <th>Получатель</th>
                             <th>IP</th>
-                            <th>Размер</th>
+                            <th class="status-size-column">Размер</th>
                             <th>Проверка</th>
                             <th>Data Box</th>
-                            <th class="status-column">Статус</th>
+                            <th class="status-size-column">Статус</th>
                         </tr>
                     </thead>
                     <tbody>

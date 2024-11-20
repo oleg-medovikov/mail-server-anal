@@ -17,7 +17,7 @@ if (!authToken) {
   })
   .then(response => {
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('Ответ сети был неудовлетворительным:');
     }
     return response.json();
   })
@@ -28,7 +28,7 @@ if (!authToken) {
     }
   })
   .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
+    console.error('Возникла проблема с операцией выборки:', error);
     // В случае ошибки также перенаправляем на страницу входа
     window.location.href = '/login.html';
   });

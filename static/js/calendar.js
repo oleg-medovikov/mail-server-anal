@@ -4,6 +4,7 @@ const closeModal = document.querySelector('.close');
 const startDatePicker = document.getElementById('start-date');
 const endDatePicker = document.getElementById('end-date');
 const applyFilterButton = document.getElementById('apply-filter');
+const cleanFilterButton = document.getElementById('clean-filter'); // Добавляем ссылку на кнопку "Очистить"
 const calendarContainer = document.getElementById('calendar-container');
 const datetimePicker = document.getElementById('datetime-picker');
 const sortButton = document.querySelector('.sort-button');
@@ -31,12 +32,20 @@ if (applyFilterButton) {
             fetchMessages(startDate, endDate).then(() => {
                 console.log('Messages filtered and loaded');
             }).catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
+                console.error('Возникла проблема с операцией выборки:', error);
             });
             modal.style.display = 'none';
         } else {
-            console.log('Please select both start and end dates.');
+            console.log('Пожалуйста, выберите даты начала и окончания');
         }
+    });
+}
+
+// Обработчик для кнопки "Очистить"
+if (cleanFilterButton) {
+    cleanFilterButton.addEventListener('click', () => {
+        startDatePicker.value = '';
+        endDatePicker.value = '';
     });
 }
 
@@ -76,6 +85,7 @@ if (startDatePicker && endDatePicker) {
         }
     });
 }
+
 function sortTableByDateTime(selectedDate) {
     const rows = Array.from(tbody.querySelectorAll('tr'));
     rows.sort((a, b) => {

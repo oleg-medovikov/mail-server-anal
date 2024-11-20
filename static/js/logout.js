@@ -17,13 +17,13 @@ document.getElementById('logoutButton').addEventListener('click', function(event
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Ответ сети был неудовлетворительным:');
       }
       localStorage.removeItem('authToken');
       window.location.href = 'login.html';
     })
     .catch(error => {
-      console.error('There has been a problem with your fetch operation:', error);
+      console.error('Возникла проблема с операцией выборки:', error);
     });
   } else {
     // Если пользователь нажал "Отменить", ничего не происходит

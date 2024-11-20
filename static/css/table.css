@@ -1,0 +1,92 @@
+.status-size-column {
+    min-width: 110px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .centered-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .centered-table th,
+  .centered-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .centered-table th {
+    background-color: var(--ui-dark-blue);
+    color: rgba(255, 255, 255, 0.759);
+  }
+  
+  .centered-table tbody tr:nth-child(even) {
+    background-color: #2d2f33;
+  }
+  
+  .centered-table tbody tr:hover {
+    background-color: #37383cca;
+  }
+  
+  .container-table {
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+  }
+  
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background-color: #2d2f33; /* Добавьте фон, чтобы слайдер был виден */
+    padding: 10px 0;
+    z-index: 100; /* Убедитесь, что слайдер находится над таблицей */
+  }
+  
+  .pagination img {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin: 0 10px;
+  }
+  
+  .pagination input {
+    width: 50px;
+    text-align: center;
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox-specific property */
+    appearance: none; /* Standard property */
+  }
+  
+  input[type="number"]:hover,
+  input[type="number"]:focus {
+    -moz-appearance: number-input; /* Firefox-specific property */
+    appearance: auto; /* Standard property */
+  }
+  
+  .table-wrapper {
+    overflow-x: auto;
+  }
