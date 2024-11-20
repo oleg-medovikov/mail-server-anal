@@ -17,8 +17,6 @@
                 </div>
                 <ul class="nav-list">
                     <li class="nav-list__item">
-                    </li>
-                    <li class="nav-list__item">
                         <a href="#!" class="nav-list__link period-trigger">Период</a>
                     </li>
                     <li class="nav-list__item">
@@ -62,37 +60,35 @@
         </div>
 
         <div class="container-table">
-              <div class="pagination">
-                  <img src="./img/icons/slider-left.svg" id="prev-page" alt="Предыдущая">
-                  <input type="number" id="page-number" min="1" value="1">
-                  <img src="./img/icons/slider-right.svg" id="next-page" alt="Следующая">
-              </div>
-              <div class="table-wrapper">
-                  <table id="messages-table" class="centered-table">
-                      <thead>
-                          <tr>
-                              <th>Дата</th>
-                              <th>Отправитель</th>
-                              <th>Получатель</th>
-                              <th>IP</th>
-                              <th>Размер</th>
-                              <th>Проверка</th>
-                              <th>Data Box</th>
-                              <th class="status-column">Статус</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <!-- данные с таблички JS -->
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-
+            <div class="pagination">
+                <img src="./img/icons/slider-left.svg" id="prev-page" alt="Предыдущая">
+                <input type="number" id="page-number" min="1" value="1">
+                <img src="./img/icons/slider-right.svg" id="next-page" alt="Следующая">
+            </div>
+            <div class="table-wrapper">
+                <table id="messages-table" class="centered-table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Отправитель</th>
+                            <th>Получатель</th>
+                            <th>IP</th>
+                            <th>Размер</th>
+                            <th>Проверка</th>
+                            <th>Data Box</th>
+                            <th class="status-column">Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- данные с таблички JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     </header>
 
-    <!-- <script src="./js/loginCheck.js"></script> -->
     <script src="./js/table.js"></script>
     <script src="./js/sender.js"></script>
     <script src="./js/calendar.js"></script>
