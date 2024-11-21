@@ -75,20 +75,54 @@ function displayMessages(messages) {
 
     messages.forEach(message => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${formatDate(message.date)}</td>
-            <td>${message.sender}</td>
-            <td>${message.recipient}</td>
-            <td>${message.ip}</td>
-            <td class="status-size-column">${formatSize(message.size)}</td>
-            <td>${message.passed}</td>
-            <td>${formatDate(message.data_box)}</td>
-            <td class="status-size-column">${formatString(message.status)}</td>
-        `;
+
+        // Создаем ячейки таблицы
+        const dateCell = document.createElement('td');
+        dateCell.textContent = formatDate(message.date);
+        row.appendChild(dateCell);
+
+        const senderCell = document.createElement('td');
+        senderCell.textContent = message.sender;
+        senderCell.classList.add('sender-cell'); // Добавляем класс
+        senderCell.addEventListener('click', () => {
+            const inputSender = document.getElementById('input-sender');
+            inputSender.value = message.sender;
+        });
+        row.appendChild(senderCell);
+
+        const recipientCell = document.createElement('td');
+        recipientCell.textContent = message.recipient;
+        recipientCell.classList.add('recipient-cell'); // Добавляем класс
+        row.appendChild(recipientCell);
+
+        const ipCell = document.createElement('td');
+        ipCell.textContent = message.ip;
+        ipCell.classList.add('ip-cell'); // Добавляем класс
+        row.appendChild(ipCell);
+
+        const sizeCell = document.createElement('td');
+        sizeCell.textContent = formatSize(message.size);
+        sizeCell.classList.add('status-size-column'); // Добавляем класс
+        row.appendChild(sizeCell);
+
+        const passedCell = document.createElement('td');
+        passedCell.textContent = message.passed;
+        passedCell.classList.add('passed-cell'); // Добавляем класс
+        row.appendChild(passedCell);
+
+        const dataBoxCell = document.createElement('td');
+        dataBoxCell.textContent = formatDate(message.data_box);
+        dataBoxCell.classList.add('data-box-cell'); // Добавляем класс
+        row.appendChild(dataBoxCell);
+
+        const statusCell = document.createElement('td');
+        statusCell.textContent = formatString(message.status);
+        statusCell.classList.add('status-size-column'); // Добавляем класс
+        row.appendChild(statusCell);
+
         tbody.appendChild(row);
     });
 }
-
 // Загрузка данных при загрузке страницы
 window.addEventListener('load', () => {
     fetchMessages().then(() => {
@@ -122,4 +156,10 @@ nextPageButton.addEventListener('click', () => {
 // Очищение таблицы
 document.querySelector('.search-form__btn').addEventListener('click', function() {
     document.getElementById('input-sender').value = '';
+});
+
+document.getElementById('start-date').addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        fetchMessages();
+    }
 });
