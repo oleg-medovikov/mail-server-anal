@@ -17,3 +17,4 @@ regex = "1.10.6"
 chrono = {version="0.4", features = ["serde"]}
 bcrypt = "0.15"
 uuid = { version = "0.8", features = ["serde", "v4"] }
+csv = "1.3"  

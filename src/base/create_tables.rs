@@ -41,6 +41,10 @@ pub async fn create_tables(pool: &PgPool) -> Result<(), sqlx::Error> {
             date TIMESTAMP,
             status_id SERIAL REFERENCES status(id)
         );
+        CREATE TABLE IF NOT EXISTS known_users (
+            id SERIAL PRIMARY KEY,
+            email VARCHAR(255) UNIQUE
+        );
         "#,
     )
     .await?;

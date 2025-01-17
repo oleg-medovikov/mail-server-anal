@@ -6,17 +6,8 @@ use rocket::fs::{FileServer, relative};
 use rocket::routes;
 
 mod base;
-use base::create_tables::create_tables;
-
 mod models;
-
 mod api;
-use api::read_files::read_files;
-use api::get_messages::get_messages;
-use api::get_senders::get_senders;
-use api::check_token::check_token;
-use api::user_login::user_login;
-use api::drop_token::drop_token;
 
 mod manual {
     use std::path::{PathBuf, Path};
@@ -36,13 +27,16 @@ mod manual {
 #[rocket::launch]
 async fn rocket() -> _ {
     dotenv().ok();
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    let pool = PgPool::connect(&database_url).await.expect("No DB CONNECT!");
-
-    let _ =  create_tables(&pool).await.expect("Не удалось создать таблицы");
+    let database_url = env::var("DATABASE_URL")
+        .expect("DATABASE_URL must be set");
+    let pool = PgPool::connect(&database_url).await
+        .expect("No DB CONNECT!");
+    let _ =  base::create_tables::create_tables(&pool).await
+        .expect("Не удалось создать таблицы");
 
     rocket::build()
         .mount("/", routes![manual::second])
         .mount("/", FileServer::from(relative!("static")))
-        .mount("/api",  routes![read_files,get_messages, get_senders, check_token, user_login, drop_token]).manage(pool)
+        .mount("/api", api::api_routes())
+        .manage(pool)
 }

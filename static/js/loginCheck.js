@@ -1,7 +1,7 @@
 // Проверяем наличие токена в localStorage
 const authToken = localStorage.getItem('authToken');
 
-if (!authToken) {
+if (authToken === null ) {
   // Если токена нет, перенаправляем на страницу входа
   window.location.href = '/login.html';
 } else {
