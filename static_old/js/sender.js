@@ -4,7 +4,7 @@ let allSenders = [];
 
 // Функция для получения списка отправителей
 async function fetchSenders() {
-    const response = await fetch('api/get_senders');
+    const response = await fetch('/api/get_senders');
     if (!response.ok) {
         throw new Error('Ответ сети был неудовлетворительным:');
     }

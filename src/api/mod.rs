@@ -8,6 +8,7 @@ mod user_login;
 mod drop_token;
 mod read_known_users;
 mod get_fuck_emails;
+mod get_leaderboard;
 
 pub fn api_routes() -> Vec<rocket::Route> {
     routes![
@@ -19,5 +20,6 @@ pub fn api_routes() -> Vec<rocket::Route> {
         drop_token::drop_token,
         read_known_users::read_known_users,
         get_fuck_emails::get_fuck_emails,
+        get_leaderboard::get_leaderboard,
     ]
 }

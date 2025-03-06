@@ -125,8 +125,8 @@ pub struct HelloResponse {
 #[get("/read_files")]
 pub async fn read_files(pool: &rocket::State<PgPool>) -> Result<Json<HelloResponse>, Status> {
     
-    //let file = File::open("/home/user/mail_log/lda_log_delta").expect("Unable to open file!");
-    let file = File::open("mail_log/lda_log_delta").expect("Unable to open file!");
+    let file = File::open("/home/user/mail_log/lda_log_delta").expect("Unable to open file!");
+    //let file = File::open("mail_log/lda_log_delta").expect("Unable to open file!");
     let reader = BufReader::new(file);
 
     for line in reader.lines() {
@@ -137,8 +137,8 @@ pub async fn read_files(pool: &rocket::State<PgPool>) -> Result<Json<HelloRespon
         }
     }
    
-    //let file = File::open("/home/user/mail_log/mail_log_delta").expect("Unable to open file!");
-    let file = File::open("mail_log/mail_log_delta").expect("Unable to open file!");
+    let file = File::open("/home/user/mail_log/mail_log_delta").expect("Unable to open file!");
+    //let file = File::open("mail_log/mail_log_delta").expect("Unable to open file!");
     let reader = BufReader::new(file);
 
     for line in reader.lines() {

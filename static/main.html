@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>МИАЦ | Index</title>
+    <title>МИАЦ | Главная</title>
     <link rel="icon" href="./img/icons/miac_short.png">
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/header.css">
@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="./css/modal.css">
     <link rel="stylesheet" href="./css/search.css">
     <link rel="stylesheet" href="./css/gir.css">
-    <link rel="stylesheet" href="./css/lists-table.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <!-- <script src="https://www.expertplus.ru/UserFiles/Image/content/new_year/10.js"></script> -->
@@ -55,15 +54,15 @@
                         <a href="#furniture" class="nav-list__link nav-list__link--dropdown">Меню</a>
                         <div class="nav-list__sub-nav">
                             <ul class="sub-nav" id="sub-nav-list">
-                                <li class="sub-nav__item"><a href="main.html" class="sub-nav__link">Главная</a></li>
                                 <li class="sub-nav__item"><a href="lists.html" class="sub-nav__link">Списки</a></li>
+                                <li class="sub-nav__item"><a href="index.html" class="sub-nav__link">Index</a></li>
                                 <!-- <li class="switch"><a href="#" class="sub-nav__link">Праздник</a>                             -->
                             </ul>
                         </div>
                     </li>
-                    <!-- <li class="nav-list__item">
+                    <li class="nav-list__item">
                         <a href="#!" class="nav-list__link period-trigger">Период</a>
-                    </li> -->
+                    </li>
                     <li class="nav-list__item">
                         <a href="#!" id="apply-filter" class="apply-filter nav-list__link">Обновить таблицу</a>
                     </li>
@@ -86,31 +85,61 @@
             </div>
 
             <div class="header__content">
-                <h1 class="header__title">Index</h1>
-                <!-- <div class="header__search">
+                <h1 class="header__title">Главная</h1>
+                <div class="header__search">
                     <form action="" class="search-form">
                         <input
                             id="input-sender"
-                            placeholder="Поиск по отправителем"
+                            placeholder="Поиск по отправителям"
                             type="text"
                             class="search-form__input"
                             autocomplete="off"
-                        />
-                        <button type="button" class="search-form__btn">
-                            <img src="./img/icons/search.svg" alt="Поиск" />
+                        >
+                        <button type="button" id="clear-button" class="cross">
+                            <img src="./img/icons/icon-cross.png" alt="Поиск" />
                         </button>
                     </form>
                     <div class="search-results" style="display: none;"></div>
-                </div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container-table">
+            <div class="pagination">
+                <img src="./img/icons/slider-left.svg" id="prev-page" alt="Предыдущая">
+                <input type="number" id="page-number" min="1" value="1">
+                <img src="./img/icons/slider-right.svg" id="next-page" alt="Следующая">
+            </div>
+            <div class="table-wrapper">
+                <table id="messages-table" class="centered-table">
+                    <thead>
+                        <tr>
+                            <th class="data-databox-column">Дата</th>
+                            <th class="sender-recipient-column">Отправитель</th>
+                            <th class="sender-recipient-column">Получатель</th>
+                            <th class="ip-column">IP</th>
+                            <th class="size-column">Размер</th>
+                            <th class="check-column">Проверка</th>
+                            <th class="data-databox-column">Data Box</th>
+                            <th class="status-column">Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- данные с таблички JS -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     </header>
+
     <!-- <script src="./js/loginCheck.js"></script> -->
-    <script>
-    // Перенаправление на страницу main.html
-    window.location.href = "main.html";
-    </script>
+    <script src="./js/table.js"></script>
+    <script src="./js/sender.js"></script>
+    <script src="./js/calendar.js"></script>
+    <script src="./js/logout.js"></script>
+    <script src="./js/gir.js"></script>
+    <script src="./js/multi.js"></script>
 </body>
 </html>

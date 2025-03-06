@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>МИАЦ | Index</title>
+    <title>МИАЦ | Списки</title>
     <link rel="icon" href="./img/icons/miac_short.png">
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/header.css">
@@ -56,7 +56,7 @@
                         <div class="nav-list__sub-nav">
                             <ul class="sub-nav" id="sub-nav-list">
                                 <li class="sub-nav__item"><a href="main.html" class="sub-nav__link">Главная</a></li>
-                                <li class="sub-nav__item"><a href="lists.html" class="sub-nav__link">Списки</a></li>
+                                <li class="sub-nav__item"><a href="index.html" class="sub-nav__link">Index</a></li>
                                 <!-- <li class="switch"><a href="#" class="sub-nav__link">Праздник</a>                             -->
                             </ul>
                         </div>
@@ -86,7 +86,7 @@
             </div>
 
             <div class="header__content">
-                <h1 class="header__title">Index</h1>
+                <h1 class="header__title">Списки</h1>
                 <!-- <div class="header__search">
                     <form action="" class="search-form">
                         <input
@@ -105,12 +105,59 @@
             </div>
         </div>
 
+        <div class="container-table">
+            <div class="table-container">
+                <div class="table-wrapper" data-table="senders">
+                    <h1>Отправители</h1>
+                    <div class="filter-buttons">
+                        <a href="#" data-days="1" data-table="senders"><span>1 д.</span></a>
+                        <a href="#" data-days="7" data-table="senders"><span>7 д.</span></a>
+                        <a href="#" data-days="14" data-table="senders"><span>14 д.</span></a>
+                        <a href="#" data-days="30" data-table="senders"><span>30 д.</span></a>
+                    </div>
+                    <table id="senders-table" class="centered-table senders-table">
+                        <thead>
+                            <tr>
+                                <th class="sender-column">Отправители</th>
+                                <th class="quantity-column">Количество</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- данные с таблички JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-wrapper" data-table="recipients">
+                    <h1>Получатели</h1>
+                    <div class="filter-buttons">
+                        <a href="#" data-days="1" data-table="recipients"><span>1 д.</span></a>
+                        <a href="#" data-days="7" data-table="recipients"><span>7 д.</span></a>
+                        <a href="#" data-days="14" data-table="recipients"><span>14 д.</span></a>
+                        <a href="#" data-days="30" data-table="recipients"><span>30 д.</span></a>
+                    </div>
+                    <table id="recipients-table" class="centered-table recipients-table">
+                        <thead>
+                            <tr>
+                                <th class="recipient-column">Получатели</th>
+                                <th class="quantity-column">Количество</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- данные с таблички JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     </header>
+
     <!-- <script src="./js/loginCheck.js"></script> -->
-    <script>
-    // Перенаправление на страницу main.html
-    window.location.href = "main.html";
-    </script>
+    <script src="./js/logout.js"></script>
+    <script src="./js/lists-table.js"></script>
+    <script src="./js/gir.js"></script>
+    <script src="./js/multi.js"></script>
 </body>
 </html>

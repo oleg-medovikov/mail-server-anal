@@ -17,10 +17,10 @@ async function fetchMessages() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                page: parseInt(pageNumberInput.value),
-                sender: inputSender.value || null,
-                datetime_start: startDateInput.value || null,
-                datetime_stop: endDateInput.value || null
+              page: parseInt(pageNumberInput.value),
+              sender: inputSender.value || null,
+              datetime_start: startDateInput.value || null,
+              datetime_stop: endDateInput.value || null
             })
         });
 
@@ -29,7 +29,6 @@ async function fetchMessages() {
         }
 
         const data = await response.json();
-        console.log('Данные, полученные с сервера:', data); // Логирование данных
         displayMessages(data);
     } catch (error) {
         console.error('Ошибка при получении сообщений:', error);
@@ -52,7 +51,7 @@ function formatString(dataString) {
     if (dataString === null) {
         return "";
     } else {
-        return dataString;
+      return dataString;
     }
 }
 
@@ -80,12 +79,11 @@ function displayMessages(messages) {
         // Создаем ячейки таблицы
         const dateCell = document.createElement('td');
         dateCell.textContent = formatDate(message.date);
-        dateCell.classList.add('data-databox-column'); // Добавляем класс
         row.appendChild(dateCell);
 
         const senderCell = document.createElement('td');
         senderCell.textContent = message.sender;
-        senderCell.classList.add('sender-recipient-column'); // Добавляем класс
+        senderCell.classList.add('sender-cell'); // Добавляем класс
         senderCell.addEventListener('click', () => {
             const inputSender = document.getElementById('input-sender');
             inputSender.value = message.sender;
@@ -94,48 +92,39 @@ function displayMessages(messages) {
 
         const recipientCell = document.createElement('td');
         recipientCell.textContent = message.recipient;
-        recipientCell.classList.add('sender-recipient-column'); // Добавляем класс
+        recipientCell.classList.add('recipient-cell'); // Добавляем класс
         row.appendChild(recipientCell);
 
         const ipCell = document.createElement('td');
         ipCell.textContent = message.ip;
-        ipCell.classList.add('ip-column'); // Добавляем класс
+        ipCell.classList.add('ip-cell'); // Добавляем класс
         row.appendChild(ipCell);
 
         const sizeCell = document.createElement('td');
         sizeCell.textContent = formatSize(message.size);
-        sizeCell.classList.add('size-column'); // Добавляем класс
+        sizeCell.classList.add('status-size-column'); // Добавляем класс
         row.appendChild(sizeCell);
 
         const passedCell = document.createElement('td');
-        passedCell.textContent = message.passed ? 'PASSED' : 'SPAM';
-        passedCell.classList.add('check-column'); // Добавляем класс
+        passedCell.textContent = message.passed;
+        passedCell.classList.add('passed-cell'); // Добавляем класс
         row.appendChild(passedCell);
 
         const dataBoxCell = document.createElement('td');
         dataBoxCell.textContent = formatDate(message.data_box);
-        dataBoxCell.classList.add('data-databox-column'); // Добавляем класс
+        dataBoxCell.classList.add('data-box-cell'); // Добавляем класс
         row.appendChild(dataBoxCell);
 
         const statusCell = document.createElement('td');
         statusCell.textContent = formatString(message.status);
-        statusCell.classList.add('status-column'); // Добавляем класс
+        statusCell.classList.add('status-size-column'); // Добавляем класс
         row.appendChild(statusCell);
 
         tbody.appendChild(row);
     });
 }
-
 // Загрузка данных при загрузке страницы
 window.addEventListener('load', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const email = urlParams.get('email');
-    if (email) {
-        document.getElementById('input-sender').value = email;
-        // Удаляем параметр email из URL, чтобы после обновления страницы он не сохранялся
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
     fetchMessages().then(() => {
         console.log('Сообщения загружены');
     }).catch(error => {
@@ -164,10 +153,9 @@ nextPageButton.addEventListener('click', () => {
     fetchMessages();
 });
 
-// Обработчик для кнопки "Очистить"
-document.getElementById('clear-button').addEventListener('click', () => {
+// Очищение таблицы
+document.querySelector('.search-form__btn').addEventListener('click', function() {
     document.getElementById('input-sender').value = '';
-    fetchMessages();
 });
 
 document.getElementById('start-date').addEventListener('keypress', (event) => {

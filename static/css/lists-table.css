@@ -1,0 +1,50 @@
+.table-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 60px;
+}
+
+.table-wrapper {
+    width: 40%; /* одинаковый размер таблиц */
+}
+
+.table-wrapper h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+.sender-column, .recipient-column{
+    height: 55px;
+    width: 600px;
+}
+.quantity-column{
+    width: 100px;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter-buttons a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.filter-buttons a span {
+    transition: color 0.2s ease;
+}
+
+.filter-buttons a.active span {
+    color: #e58411; 
+}
+
+.sender-column, .recipient-column {
+    cursor: pointer;
+}
